@@ -77,7 +77,7 @@ grid2nc <- function(data,
                     shuffle = FALSE,
                     verbose = FALSE) {
       tmpStdName <- data$Variable$varName
-      tmpUnits <- attributes(data$Variable)$"units"
+      #tmpUnits <- attributes(data$Variable)$"units"
       time.index <- grep("^time$", attr(data$Data, "dimensions"))
       lon.index <- grep("^lon$", attr(data$Data, "dimensions"))
       lat.index <- grep("^lat$", attr(data$Data, "dimensions"))
@@ -97,7 +97,7 @@ grid2nc <- function(data,
             dimOrdered <- list(dimlon,dimlat,dimtime)
       }
       dataOrdered <- aperm(data$Data, perOrdered)
-      var <- ncvar_def(data$Variable$varName, units = tmpUnits, dim = dimOrdered, missval, longname = tmpStdName, compression = compression, shuffle = shuffle)
+      var <- ncvar_def(data$Variable$varName, dim = dimOrdered, missval, longname = tmpStdName, compression = compression, shuffle = shuffle)
       ncnew <- nc_create(NetCDFOutFile, var, verbose = verbose)
       ncatt_put(ncnew, "time", "standard_name","time")
       ncatt_put(ncnew, "time", "axis","T")
